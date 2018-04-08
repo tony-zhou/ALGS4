@@ -4,7 +4,9 @@ import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
 
-    private double[] threholdList;
+    private final double[] threholdList;
+    private final double mean;
+    private final double stddev;
 
     public PercolationStats(int n, int trials) {
         if (n <= 0 || trials <= 0)
@@ -13,6 +15,8 @@ public class PercolationStats {
         for (int i = 0; i < trials; i++) {
             threholdList[i] = percolationThrehold(n);
         }
+        mean = StdStats.mean(threholdList);
+        stddev = StdStats.stddev(threholdList);
     }
 
     private double percolationThrehold(int n) {
@@ -26,25 +30,25 @@ public class PercolationStats {
     }
 
     public double mean() {
-        return StdStats.mean(threholdList);
+        return mean;
     }
 
     public double stddev() {
-        return StdStats.stddev(threholdList);
+        return stddev;
     }
 
     public double confidenceLo() {
-        return mean() - 1.9 * Math.sqrt(stddev() / threholdList.length);
+        return mean - 1.9 * Math.sqrt(stddev / threholdList.length);
     }
 
     public double confidenceHi() {
-        return mean() + 1.9 * Math.sqrt(stddev() / threholdList.length);
+        return mean + 1.9 * Math.sqrt(stddev / threholdList.length);
     }
 
     public static void main(String[] args) {
-        int N = Integer.parseInt(args[0]);
-        int Trails = Integer.parseInt(args[1]);
-        PercolationStats percolationStats = new PercolationStats(N, Trails);
+        int n = Integer.parseInt(args[0]);
+        int trails = Integer.parseInt(args[1]);
+        PercolationStats percolationStats = new PercolationStats(n, trails);
         StdOut.println("mean                    = " + percolationStats.mean());
         StdOut.println("stddev                  = " + percolationStats.stddev());
         StdOut.println("95% confidence interval = " + "[" + percolationStats.confidenceLo() + ", " + percolationStats.confidenceHi() + "]");
