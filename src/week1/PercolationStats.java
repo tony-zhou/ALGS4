@@ -24,8 +24,9 @@ public class PercolationStats {
     private double percolationThrehold(int n) {
         Percolation percolation = new Percolation(n);
         while (!percolation.percolates()) {
-            int row = StdRandom.uniform(1, n + 1);
-            int col = StdRandom.uniform(1, n + 1);
+            int position = StdRandom.uniform(1, n * n + 1);
+            int row = position % n == 0 ? position / n : position / n + 1;
+            int col = position - n * (row - 1);
             percolation.open(row, col);
         }
         return percolation.numberOfOpenSites() / (double) (n * n);
@@ -40,11 +41,11 @@ public class PercolationStats {
     }
 
     public double confidenceLo() {
-        return mean - MAGICNUMBER * Math.sqrt(stddev / threholdList.length);
+        return mean - MAGICNUMBER * stddev / Math.sqrt(threholdList.length);
     }
 
     public double confidenceHi() {
-        return mean + MAGICNUMBER * Math.sqrt(stddev / threholdList.length);
+        return mean + MAGICNUMBER * stddev / Math.sqrt(threholdList.length);
     }
 
     public static void main(String[] args) {
