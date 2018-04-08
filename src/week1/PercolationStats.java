@@ -4,10 +4,11 @@ import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
 
+    private static final double MAGICNUMBER = 1.96;
     private final double[] threholdList;
     private final double mean;
     private final double stddev;
-    private final static double magicNumber = 1.96;
+
 
     public PercolationStats(int n, int trials) {
         if (n <= 0 || trials <= 0)
@@ -39,11 +40,11 @@ public class PercolationStats {
     }
 
     public double confidenceLo() {
-        return mean - magicNumber * Math.sqrt(stddev / threholdList.length);
+        return mean - MAGICNUMBER * Math.sqrt(stddev / threholdList.length);
     }
 
     public double confidenceHi() {
-        return mean + magicNumber * Math.sqrt(stddev / threholdList.length);
+        return mean + MAGICNUMBER * Math.sqrt(stddev / threholdList.length);
     }
 
     public static void main(String[] args) {

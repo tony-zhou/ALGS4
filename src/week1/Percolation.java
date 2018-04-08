@@ -53,7 +53,7 @@ public class Percolation {
 
     public boolean isFull(int row, int col) {
         validationHelper(row, col);
-        return weightedQuickUnionUF.connected(0, positionHelper(row, col)) && isOpen(row, col) && !percolates();
+        return weightedQuickUnionUF.connected(0, positionHelper(row, col)) && isOpen(row, col);
     }
 
     public int numberOfOpenSites() {
