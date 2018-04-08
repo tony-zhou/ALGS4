@@ -7,7 +7,7 @@ public class PercolationStats {
     private final double[] threholdList;
     private final double mean;
     private final double stddev;
-    private final double magicNumber = 1.96;
+    private final static double magicNumber = 1.96;
 
     public PercolationStats(int n, int trials) {
         if (n <= 0 || trials <= 0)

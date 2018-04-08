@@ -3,7 +3,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 public class Percolation {
 
     private final WeightedQuickUnionUF weightedQuickUnionUF;
-    private boolean[] id;
+    private int[] id;
     private final int n;
     private int count;
 
@@ -12,13 +12,13 @@ public class Percolation {
             throw new IllegalArgumentException();
         this.n = n;
         weightedQuickUnionUF = new WeightedQuickUnionUF(n * n + 2);
-        id = new boolean[n * n + 1];
+        id = new int[n * n + 1];
         for (int i = 1; i <= n; i++) {
             weightedQuickUnionUF.union(0, i);
             weightedQuickUnionUF.union(n * n + 1, n * n + 1 - i);
         }
         for (int i = 1; i <= n * n; i++)
-            id[i] = false;
+            id[i] = 0;
     }
 
     private int positionHelper(int row, int col) {
@@ -41,19 +41,22 @@ public class Percolation {
                 weightedQuickUnionUF.union(positionHelper(row, col), positionHelper(row, col - 1));
             if (col < n && isOpen(row, col + 1))
                 weightedQuickUnionUF.union(positionHelper(row, col), positionHelper(row, col + 1));
-            id[positionHelper(row, col)] = true;
+            id[positionHelper(row, col)] = 1;
             count += 1;
+        }
+        if (weightedQuickUnionUF.connected(0, positionHelper(row, col))) {
+            id[positionHelper(row, col)] = 2;
         }
     }
 
     public boolean isOpen(int row, int col) {
         validationHelper(row, col);
-        return id[positionHelper(row, col)];
+        return id[positionHelper(row, col)] >= 1;
     }
 
     public boolean isFull(int row, int col) {
         validationHelper(row, col);
-        return weightedQuickUnionUF.connected(0, positionHelper(row, col)) && isOpen(row, col);
+        return weightedQuickUnionUF.connected(0, positionHelper(row, col)) && id[positionHelper(row, col)] == 2;
     }
 
     public int numberOfOpenSites() {
