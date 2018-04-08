@@ -7,6 +7,7 @@ public class PercolationStats {
     private final double[] threholdList;
     private final double mean;
     private final double stddev;
+    private final double magicNumber = 1.96;
 
     public PercolationStats(int n, int trials) {
         if (n <= 0 || trials <= 0)
@@ -38,11 +39,11 @@ public class PercolationStats {
     }
 
     public double confidenceLo() {
-        return mean - 1.9 * Math.sqrt(stddev / threholdList.length);
+        return mean - magicNumber * Math.sqrt(stddev / threholdList.length);
     }
 
     public double confidenceHi() {
-        return mean + 1.9 * Math.sqrt(stddev / threholdList.length);
+        return mean + magicNumber * Math.sqrt(stddev / threholdList.length);
     }
 
     public static void main(String[] args) {
