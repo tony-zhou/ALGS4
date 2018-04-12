@@ -21,6 +21,7 @@
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/dictionaries
+.idea/copyright
 out/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
