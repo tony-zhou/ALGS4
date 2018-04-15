@@ -3,9 +3,6 @@ package week2;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-/**
- * Created by tony on 4/16/18.
- */
 public class Permutation {
 
     public static void main(String[] args) {

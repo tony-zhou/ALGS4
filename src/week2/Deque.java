@@ -17,7 +17,8 @@ public class Deque<Item> implements Iterable<Item> {
         private Node previous;
     }
 
-    public Deque() {}
+    public Deque() {
+    }
 
     public boolean isEmpty() {
         return size == 0;
@@ -87,29 +88,30 @@ public class Deque<Item> implements Iterable<Item> {
 
     @Override
     public Iterator<Item> iterator() {
-        return new Iterator<Item>() {
+        return new DequeIterator();
 
-            private Node current = first;
+    }
 
-            @Override
-            public boolean hasNext() {
-                return current != null;
-            }
+    private class DequeIterator implements Iterator<Item> {
+        private Node current = first;
 
-            @Override
-            public Item next() {
-                if (current == null)
-                    throw new NoSuchElementException();
-                Item item = current.value;
-                current = current.next;
-                return item;
-            }
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
 
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
+        @Override
+        public Item next() {
+            if (current == null) throw new NoSuchElementException();
+            Item item = current.value;
+            current = current.next;
+            return item;
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     public static void main(String[] args) {
@@ -119,7 +121,7 @@ public class Deque<Item> implements Iterable<Item> {
         deque.addFirst("hello");
         deque.addLast("world");
         deque.addFirst("1900");
-        for (String s: deque)
+        for (String s : deque)
             StdOut.println(s);
     }
 }

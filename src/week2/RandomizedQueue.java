@@ -12,19 +12,16 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     private int index = 0;
     private Item[] queue;
 
-    @SuppressWarnings("unchecked")
     public RandomizedQueue() {
         queue = (Item[]) new Object[1];
     }
 
-    @SuppressWarnings("unchecked")
     private void resize(int len) {
         Item[] tmpQueue = (Item[]) new Object[len];
-        int index = 0;
+        int pos = 0;
         for (int i = 0; i < queue.length; i++) {
             if (queue[i] != null) {
-                tmpQueue[index] = queue[i];
-                index++;
+                tmpQueue[pos++] = queue[i];
             }
         }
         queue = tmpQueue;
@@ -78,35 +75,35 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     @Override
     public Iterator<Item> iterator() {
-        return new Iterator<Item>() {
+        return new RandomizedQueueIterator();
+    }
 
-            private Item[] tmp = queue.clone();
-            private int count = size;
+    private class RandomizedQueueIterator implements Iterator<Item> {
+        private Item[] tmp = queue.clone();
+        private int count = size;
 
-            @Override
-            public boolean hasNext() {
-                return count != 0;
+        @Override
+        public boolean hasNext() {
+            return count != 0;
+        }
+
+        @Override
+        public Item next() {
+            if (!hasNext()) throw new NoSuchElementException();
+            Item item = null;
+            while (item == null) {
+                int position = StdRandom.uniform(0, index);
+                item = tmp[position];
+                tmp[position] = null;
             }
+            count--;
+            return item;
+        }
 
-            @Override
-            public Item next() {
-                if (!hasNext())
-                    throw new NoSuchElementException();
-                Item item = null;
-                while (item == null) {
-                    int position = StdRandom.uniform(0, index);
-                    item = tmp[position];
-                    tmp[position] = null;
-                }
-                count--;
-                return item;
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     public static void main(String[] args) {
@@ -118,9 +115,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 //        StdOut.println(randomizedQueue.dequeue());
 //        StdOut.println(randomizedQueue.sample());
 //        StdOut.println(randomizedQueue.sample());
-        for (char item: randomizedQueue)
+        for (char item : randomizedQueue)
             StdOut.println(item);
-        for (char item: randomizedQueue)
+        for (char item : randomizedQueue)
             StdOut.println(item);
     }
 
