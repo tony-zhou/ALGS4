@@ -24,6 +24,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
                 tmpQueue[pos++] = queue[i];
             }
         }
+        index = pos;
         queue = tmpQueue;
     }
 
@@ -39,7 +40,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         if (item == null)
             throw new IllegalArgumentException();
         if (queue.length <= index) {
-            resize(2 * size);
+            resize(2 * queue.length);
         }
         queue[index++] = item;
         size++;
@@ -56,10 +57,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
         size--;
         if (size < queue.length / 4) {
-            if (size != 0)
-                resize(2 * size);
-            else
-                resize(1);
+            resize(queue.length / 2);
         }
         return item;
     }
