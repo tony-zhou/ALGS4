@@ -7,7 +7,7 @@ import edu.princeton.cs.algs4.StdOut;
  */
 public class ShellSort {
     public static void sort(Comparable[] a) {
-        for (int k = 2; k >= 0; k--) {
+        for (int k = a.length / 3; k >= 0; k--) {
             int h = 3 * k + 1;
             for (int i = h; i < a.length; i++) {
                 for (int j = i; j - h >= 0; j -= h) {
