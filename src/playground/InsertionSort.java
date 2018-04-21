@@ -31,7 +31,7 @@ public class InsertionSort {
 
     public static void main(String[] args) {
         Comparable[] data = {1, 23, 5, 7, 5, -1, 9, 34, 0};
-        SelectionSort.sort(data);
+        InsertionSort.sort(data);
         for(Comparable i: data) {
             StdOut.println(i);
         }
