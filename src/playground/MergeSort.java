@@ -7,35 +7,65 @@ public class MergeSort {
 
     public static void sort(Comparable[] a) {
         Comparable[] aux = new Comparable[a.length];
+        for (int i = 0; i < a.length; i++) {
+            aux[i] = a[i];
+        }
         sort(a, aux, 0, a.length - 1);
+        for (int i = 0; i < a.length; i++) {
+            a[i] = aux[i];
+        }
     }
 
     private static void sort(Comparable[] a, Comparable[] aux, int lo, int hi) {
-        if (lo >= hi) return;
+        // optimization
+        if (lo + 7 >= hi) {
+            sort(aux, lo, hi);
+            return;
+        }
+        // without optimization
+        // if (lo >= hi) return;
         int mid = (lo + hi) / 2;
-        sort(a, aux, lo, mid);
-        sort(a, aux, mid + 1, hi);
+        // optimization
+        sort(aux, a, lo, mid);
+        sort(aux, a, mid + 1, hi);
+        // without optimization
+        // sort(a, aux, lo, mid);
+        // sort(a, aux, mid + 1, hi);
+        if (less(a[mid], a[mid + 1])) return;
         merge(a, aux, lo, hi, mid);
     }
 
-    private static void merge(Comparable[] a, Comparable[] aux, int lo, int hi, int mid) {
-        for (int k = lo; k <= hi; k++) {
-            aux[k] = a[k];
+    public static void sort(Comparable[] a, int lo, int hi) {
+        for (int k = (hi + 1) / 3; k >= 0; k--) {
+            int h = 3 * k + 1;
+            for (int i = h; i < hi + 1; i++) {
+                for (int j = i; j - h >= lo; j -= h) {
+                    if (less(a[j], a[j - h])) {
+                        exchange(a, j, j - h);
+                    } else {
+                        break;
+                    }
+                }
+            }
         }
+    }
 
-        assert isSorted(a, lo, mid);
-        assert isSorted(a, mid + 1, hi);
+    private static void merge(Comparable[] a, Comparable[] aux, int lo, int hi, int mid) {
+
+        // without optimization
+        // for (int k = lo; k <= hi; k++) {
+        //     aux[k] = a[k];
+        // }
 
         int i = lo;
         int j = mid + 1;
         for (int k = lo; k <= hi; k++) {
-            if (i > mid) a[k] = aux[j++];
-            else if (j > hi) a[k] = aux[i++];
-            else if (less(aux[i], aux[j])) a[k] = aux[i++];
-            else a[k] = aux[j++];
+            if (i > mid) aux[k] = a[j++];
+            else if (j > hi) aux[k] = a[i++];
+            else if (less(a[i], a[j])) aux[k] = a[i++];
+            else aux[k] = a[j++];
         }
 
-        assert isSorted(a, lo, hi);
     }
 
     private static boolean isSorted(Comparable[] a, int i, int j) {
@@ -51,11 +81,18 @@ public class MergeSort {
         return i.compareTo(j) < 0;
     }
 
+    private static void exchange(Comparable[] a, int i, int j) {
+        Comparable tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+    }
+
     public static void main(String[] args) {
-        Comparable[] data = {1, 23, 5, 7, 5, -1, 9, 34, 0};
+        Comparable[] data = {1, 23, 5, 7, 5, -1, -7, 10, 9, 34, 0};
         MergeSort.sort(data);
         for (Comparable i : data) {
             StdOut.println(i);
         }
+
     }
 }
