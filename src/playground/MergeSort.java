@@ -7,17 +7,15 @@ public class MergeSort {
 
     public static void sort(Comparable[] a) {
         Comparable[] aux = new Comparable[a.length];
+        // avoid a and aux switch cause NPE
         for (int i = 0; i < a.length; i++) {
             aux[i] = a[i];
         }
         sort(a, aux, 0, a.length - 1);
-        for (int i = 0; i < a.length; i++) {
-            a[i] = aux[i];
-        }
     }
 
     private static void sort(Comparable[] a, Comparable[] aux, int lo, int hi) {
-        // optimization
+        // use shell sort with little array is more faster
         if (lo + 7 >= hi) {
             sort(aux, lo, hi);
             return;
@@ -25,14 +23,16 @@ public class MergeSort {
         // without optimization
         // if (lo >= hi) return;
         int mid = (lo + hi) / 2;
-        // optimization
-        sort(aux, a, lo, mid);
-        sort(aux, a, mid + 1, hi);
+        // make aux is sorted
+        sort(a, aux, lo, mid);
+        sort(a, aux, mid + 1, hi);
         // without optimization
         // sort(a, aux, lo, mid);
         // sort(a, aux, mid + 1, hi);
+        // avoid merge if array is sorted
         if (less(a[mid], a[mid + 1])) return;
-        merge(a, aux, lo, hi, mid);
+        // merge aux back to a
+        merge(aux, a, lo, hi, mid);
     }
 
     public static void sort(Comparable[] a, int lo, int hi) {
@@ -88,7 +88,7 @@ public class MergeSort {
     }
 
     public static void main(String[] args) {
-        Comparable[] data = {1, 23, 5, 7, 5, -1, -7, 10, 9, 34, 0};
+        Comparable[] data = {1, 23, 5, 7, 5, -1, -7, 10, 9, 34, 34, 0};
         MergeSort.sort(data);
         for (Comparable i : data) {
             StdOut.println(i);
