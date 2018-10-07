@@ -25,6 +25,7 @@ public class InsertionSort {
         a[j] = tmp;
     }
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     private static boolean less(Comparable a, Comparable b) {
         return a.compareTo(b) < 0;
     }

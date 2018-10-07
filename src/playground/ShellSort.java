@@ -21,6 +21,7 @@ public class ShellSort {
         }
     }
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     private static boolean less(Comparable a, Comparable b) {
         return a.compareTo(b) < 0;
     }
