@@ -57,6 +57,9 @@ public class MergeSort {
         //     aux[k] = a[k];
         // }
 
+        assert isSorted(a, lo, mid);
+        assert isSorted(a, mid + 1, hi);
+
         int i = lo;
         int j = mid + 1;
         for (int k = lo; k <= hi; k++) {
@@ -66,11 +69,13 @@ public class MergeSort {
             else aux[k] = a[j++];
         }
 
+        assert isSorted(aux, lo, hi);
+
     }
 
     private static boolean isSorted(Comparable[] a, int i, int j) {
         for (int k = i; k < j; k++) {
-            if (less(a[i + 1], a[i]))
+            if (less(a[k + 1], a[k]))
                 return false;
         }
         return true;
