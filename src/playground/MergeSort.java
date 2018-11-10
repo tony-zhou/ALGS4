@@ -5,6 +5,8 @@ import edu.princeton.cs.algs4.StdOut;
 
 public class MergeSort {
 
+    private static int min_gap = 7;
+
     public static void sort(Comparable[] a) {
         Comparable[] aux = new Comparable[a.length];
         // avoid a and aux switch cause NPE
@@ -12,11 +14,16 @@ public class MergeSort {
             aux[i] = a[i];
         }
         sort(a, aux, 0, a.length - 1);
+        if (a.length <= min_gap + 1) {
+            for (int i = 0; i < a.length; i++) {
+                a[i] = aux[i];
+            }
+        }
     }
 
     private static void sort(Comparable[] a, Comparable[] aux, int lo, int hi) {
         // use shell sort with little array is more faster
-        if (lo + 7 >= hi) {
+        if (lo + min_gap >= hi) {
             sort(aux, lo, hi);
             return;
         }
@@ -93,7 +100,7 @@ public class MergeSort {
     }
 
     public static void main(String[] args) {
-        Comparable[] data = {1, 23, 5, 7, 5, -1, -7, 10, 9, 34, 34, 0};
+        Comparable[] data = {23, 7, 5, 10, 6, -1, 2, 3};
         MergeSort.sort(data);
         for (Comparable i : data) {
             StdOut.println(i);
