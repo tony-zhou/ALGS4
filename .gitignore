@@ -18,8 +18,8 @@
 *.tar.gz
 *.rar
 
-.idea/**/workspace.xml
-.idea/**/tasks.xml
+.idea/workspace.xml
+.idea/tasks.xml
 .idea/dictionaries
 .idea/copyright
 out/
