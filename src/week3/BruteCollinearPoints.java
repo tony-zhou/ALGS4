@@ -27,7 +27,8 @@ public class BruteCollinearPoints {
             if (points[i].compareTo(points[i - 1]) == 0)
                 throw new IllegalArgumentException();
         }
-        this.points = points;
+        this.points = new Point[points.length];
+        if (points.length >= 0) System.arraycopy(points, 0, this.points, 0, points.length);
     }
 
     public int numberOfSegments() {
