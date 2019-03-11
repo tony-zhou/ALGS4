@@ -10,7 +10,7 @@ import java.util.List;
 
 public class BruteCollinearPoints {
 
-    private Point[] points;
+    private final Point[] points;
 
     public BruteCollinearPoints(Point[] points) {
         if (points == null)
@@ -36,15 +36,15 @@ public class BruteCollinearPoints {
 
     public LineSegment[] segments() {
         List<LineSegment> temp = new ArrayList<>();
-        for (int i = 0; i < points.length - 3; i++) {
-            for (int j = i + 1; j < points.length - 2; j++) {
-                Double slopeToIJ = points[i].slopeTo(points[j]);
-                for (int k = j + 1; k < points.length - 1; k++) {
-                    if (Double.compare(slopeToIJ, points[i].slopeTo(points[k])) != 0)
+        for (int firstPoint = 0; firstPoint < points.length - 3; firstPoint++) {
+            for (int secondPoint = firstPoint + 1; secondPoint < points.length - 2; secondPoint++) {
+                double slopeToIJ = points[firstPoint].slopeTo(points[secondPoint]);
+                for (int thirdPoint = secondPoint + 1; thirdPoint < points.length - 1; thirdPoint++) {
+                    if (Double.compare(slopeToIJ, points[firstPoint].slopeTo(points[thirdPoint])) != 0)
                         continue;
-                    for (int l = k + 1; l < points.length; l++) {
-                        if (Double.compare(slopeToIJ, points[i].slopeTo(points[l])) == 0)
-                            temp.add(new LineSegment(points[i], points[l]));
+                    for (int forthPoint = thirdPoint + 1; forthPoint < points.length; forthPoint++) {
+                        if (Double.compare(slopeToIJ, points[firstPoint].slopeTo(points[forthPoint])) == 0)
+                            temp.add(new LineSegment(points[firstPoint], points[forthPoint]));
                     }
                 }
             }

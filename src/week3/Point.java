@@ -1,6 +1,5 @@
 package week3;
 
-
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
 
@@ -59,8 +58,12 @@ public class Point implements Comparable<Point> {
                 return Double.NEGATIVE_INFINITY;
             else
                 return Double.POSITIVE_INFINITY;
-        } else
-            return (that.y - this.y) / (that.x - this.x + 0.0);
+        } else {
+            if (that.y == this.y)
+                return 0.0;
+            else
+                return (that.y - this.y) / (that.x - this.x + 0.0);
+        }
     }
 
     /**
@@ -124,8 +127,8 @@ public class Point implements Comparable<Point> {
      * Unit tests the Point data type.
      */
     public static void main(String[] args) {
-        Point p1 = new Point(1,1);
-        Point p2 = new Point(2,1);
+        Point p1 = new Point(1, 1);
+        Point p2 = new Point(2, 1);
         StdOut.println(p1.slopeTo(p2));
     }
 }

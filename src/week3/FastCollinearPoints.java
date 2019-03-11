@@ -1,6 +1,5 @@
 package week3;
 
-
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Insertion;
 import edu.princeton.cs.algs4.StdDraw;
@@ -11,7 +10,7 @@ import java.util.List;
 
 public class FastCollinearPoints {
 
-    private Point[] points;
+    private final Point[] points;
 
     public FastCollinearPoints(Point[] points) {
         if (points == null)
