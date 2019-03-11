@@ -1,5 +1,6 @@
 package week3;
 
+
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Insertion;
 import edu.princeton.cs.algs4.StdDraw;
@@ -27,7 +28,7 @@ public class FastCollinearPoints {
                 throw new IllegalArgumentException();
         }
         this.points = new Point[points.length];
-        if (points.length >= 0) System.arraycopy(points, 0, this.points, 0, points.length);
+        System.arraycopy(points, 0, this.points, 0, points.length);
     }
 
     public int numberOfSegments() {
@@ -39,7 +40,7 @@ public class FastCollinearPoints {
         Insertion.sort(points, points[0].slopeOrder());
         int base = 0;
         for (int i = base + 2; i < points.length; i++) {
-            if (points[base].slopeTo(points[i - 1]) == points[base].slopeTo(points[i]))
+            if (Double.compare(points[base].slopeTo(points[i - 1]), points[base].slopeTo(points[i])) == 0)
                 continue;
             else {
                 if (i - base >= 3) {

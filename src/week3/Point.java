@@ -1,5 +1,6 @@
 package week3;
 
+
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
 

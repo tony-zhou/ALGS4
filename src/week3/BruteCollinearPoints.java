@@ -1,6 +1,5 @@
 package week3;
 
-
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Insertion;
 import edu.princeton.cs.algs4.StdDraw;
@@ -28,7 +27,7 @@ public class BruteCollinearPoints {
                 throw new IllegalArgumentException();
         }
         this.points = new Point[points.length];
-        if (points.length >= 0) System.arraycopy(points, 0, this.points, 0, points.length);
+        System.arraycopy(points, 0, this.points, 0, points.length);
     }
 
     public int numberOfSegments() {
@@ -41,10 +40,10 @@ public class BruteCollinearPoints {
             for (int j = i + 1; j < points.length - 2; j++) {
                 Double slopeToIJ = points[i].slopeTo(points[j]);
                 for (int k = j + 1; k < points.length - 1; k++) {
-                    if (slopeToIJ != points[i].slopeTo(points[k]))
+                    if (Double.compare(slopeToIJ, points[i].slopeTo(points[k])) != 0)
                         continue;
                     for (int l = k + 1; l < points.length; l++) {
-                        if (slopeToIJ == points[i].slopeTo(points[l]))
+                        if (Double.compare(slopeToIJ, points[i].slopeTo(points[l])) == 0)
                             temp.add(new LineSegment(points[i], points[l]));
                     }
                 }
