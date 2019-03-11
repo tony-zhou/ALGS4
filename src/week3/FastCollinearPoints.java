@@ -1,9 +1,9 @@
 package week3;
 
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.Insertion;
-import edu.princeton.cs.algs4.StdDraw;
-import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FastCollinearPoints {
 
@@ -31,7 +31,24 @@ public class FastCollinearPoints {
     }
 
     public LineSegment[] segments() {
-
+        List<LineSegment> temp = new ArrayList<>();
+        Insertion.sort(points, points[0].slopeOrder());
+        int base = 0;
+        for (int i = base + 2; i < points.length; i++) {
+            if (points[base].slopeTo(points[i - 1]) == points[base].slopeTo(points[i]))
+                continue;
+            else {
+                if (i - base >= 3) {
+                    temp.add(new LineSegment(points[base], points[i - 1]));
+                }
+                base = i;
+            }
+        }
+        LineSegment[] lineSegments = new LineSegment[temp.size()];
+        for (int i = 0; i < lineSegments.length; i++) {
+            lineSegments[i] = temp.get(i);
+        }
+        return lineSegments;
     }
 
     public static void main(String[] args) {
