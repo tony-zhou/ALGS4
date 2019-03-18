@@ -21,13 +21,13 @@ public class BruteCollinearPoints {
                     throw new IllegalArgumentException();
             }
         }
-        Insertion.sort(points);
-        for (int i = 1; i < points.length; i++) {
-            if (points[i].compareTo(points[i - 1]) == 0)
-                throw new IllegalArgumentException();
-        }
         this.points = new Point[points.length];
         System.arraycopy(points, 0, this.points, 0, points.length);
+        Insertion.sort(this.points);
+        for (int i = 1; i < this.points.length; i++) {
+            if (this.points[i].compareTo(this.points[i - 1]) == 0)
+                throw new IllegalArgumentException();
+        }
     }
 
     public int numberOfSegments() {
