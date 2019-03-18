@@ -1,10 +1,12 @@
 package week3;
 
-import edu.princeton.cs.algs4.*;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Insertion;
+import edu.princeton.cs.algs4.StdDraw;
+import edu.princeton.cs.algs4.StdOut;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FastCollinearPoints {
 
@@ -45,14 +47,13 @@ public class FastCollinearPoints {
                     tmp.add(points[j]);
                     tmp.add(points[k]);
                     k++;
-                }
-                else {
+                } else {
                     j = k;
                     k = j + 1;
                     if (tmp.size() >= 4) {
                         Point start = points[0];
                         Point end = points[0];
-                        for (Point p: tmp) {
+                        for (Point p : tmp) {
                             if (p.compareTo(start) < 0)
                                 start = p;
                             else if (p.compareTo(end) > 0)
@@ -60,7 +61,7 @@ public class FastCollinearPoints {
                         }
                         LineSegment l = new LineSegment(start, end);
                         boolean duplicateLineSegment = false;
-                        for (LineSegment lineSegment: temp) {
+                        for (LineSegment lineSegment : temp) {
                             if (lineSegment.toString().compareTo(l.toString()) == 0) {
                                 duplicateLineSegment = true;
                                 break;
@@ -68,9 +69,7 @@ public class FastCollinearPoints {
                         }
                         if (!duplicateLineSegment)
                             temp.add(l);
-                        tmp = new ArrayList<>();
-                        tmp.add(points[0]);
-                    } else {
+                    } else if (tmp.size() < 4 && tmp.size() > 1) {
                         tmp = new ArrayList<>();
                         tmp.add(points[0]);
                     }
