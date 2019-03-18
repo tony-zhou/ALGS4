@@ -69,11 +69,33 @@ public class FastCollinearPoints {
                         }
                         if (!duplicateLineSegment)
                             temp.add(line);
-                    } else if (tmp.size() > 1) {
+                        tmp = new ArrayList<>();
+                        tmp.add(points[0]);
+                    } else {
                         tmp = new ArrayList<>();
                         tmp.add(points[0]);
                     }
                 }
+            }
+            if (tmp.size() >= 4) {
+                Point start = points[0];
+                Point end = points[0];
+                for (Point p : tmp) {
+                    if (p.compareTo(start) < 0)
+                        start = p;
+                    else if (p.compareTo(end) > 0)
+                        end = p;
+                }
+                LineSegment line = new LineSegment(start, end);
+                boolean duplicateLineSegment = false;
+                for (LineSegment lineSegment : temp) {
+                    if (lineSegment.toString().compareTo(line.toString()) == 0) {
+                        duplicateLineSegment = true;
+                        break;
+                    }
+                }
+                if (!duplicateLineSegment)
+                    temp.add(line);
             }
         }
         LineSegment[] lineSegments = new LineSegment[temp.size()];
