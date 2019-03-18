@@ -59,17 +59,17 @@ public class FastCollinearPoints {
                             else if (p.compareTo(end) > 0)
                                 end = p;
                         }
-                        LineSegment l = new LineSegment(start, end);
+                        LineSegment line = new LineSegment(start, end);
                         boolean duplicateLineSegment = false;
                         for (LineSegment lineSegment : temp) {
-                            if (lineSegment.toString().compareTo(l.toString()) == 0) {
+                            if (lineSegment.toString().compareTo(line.toString()) == 0) {
                                 duplicateLineSegment = true;
                                 break;
                             }
                         }
                         if (!duplicateLineSegment)
-                            temp.add(l);
-                    } else if (tmp.size() < 4 && tmp.size() > 1) {
+                            temp.add(line);
+                    } else if (tmp.size() > 1) {
                         tmp = new ArrayList<>();
                         tmp.add(points[0]);
                     }
