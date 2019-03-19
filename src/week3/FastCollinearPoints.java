@@ -67,14 +67,12 @@ public class FastCollinearPoints {
                                 break;
                             }
                         }
-                        if (!duplicateLineSegment)
+                        if (!duplicateLineSegment) {
                             temp.add(line);
-                        tmp = new ArrayList<>();
-                        tmp.add(points[0]);
-                    } else {
-                        tmp = new ArrayList<>();
-                        tmp.add(points[0]);
+                        }
                     }
+                    tmp.clear();
+                    tmp.add(points[0]);
                 }
             }
             if (tmp.size() >= 4) {
@@ -126,11 +124,13 @@ public class FastCollinearPoints {
         StdDraw.show();
 
         // print and draw the line segments
+        long startTime = System.currentTimeMillis();
         FastCollinearPoints collinear = new FastCollinearPoints(points);
         for (LineSegment segment : collinear.segments()) {
             StdOut.println(segment);
             segment.draw();
         }
         StdDraw.show();
+        StdOut.print(System.currentTimeMillis() - startTime);
     }
 }
