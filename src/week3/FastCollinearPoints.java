@@ -11,6 +11,7 @@ import java.util.List;
 public class FastCollinearPoints {
 
     private final Point[] points;
+    private final Point[] base;
 
     public FastCollinearPoints(Point[] points) {
         if (points == null)
@@ -22,7 +23,9 @@ public class FastCollinearPoints {
             }
         }
         this.points = new Point[points.length];
+        base = new Point[points.length];
         System.arraycopy(points, 0, this.points, 0, points.length);
+        System.arraycopy(points, 0, base, 0, points.length);
         Insertion.sort(this.points);
         for (int i = 1; i < this.points.length; i++) {
             if (this.points[i].compareTo(this.points[i - 1]) == 0)
@@ -36,8 +39,8 @@ public class FastCollinearPoints {
 
     public LineSegment[] segments() {
         List<LineSegment> temp = new ArrayList<>();
-        for (int i = 0; i < points.length; i++) {
-            Insertion.sort(points, points[i].slopeOrder());
+        for (int i = 0; i < base.length; i++) {
+            Insertion.sort(points, base[i].slopeOrder());
             int j = 1;
             int k = 2;
             List<Point> tmp = new ArrayList<>();
@@ -124,13 +127,12 @@ public class FastCollinearPoints {
         StdDraw.show();
 
         // print and draw the line segments
-        long startTime = System.currentTimeMillis();
         FastCollinearPoints collinear = new FastCollinearPoints(points);
         for (LineSegment segment : collinear.segments()) {
             StdOut.println(segment);
             segment.draw();
         }
         StdDraw.show();
-        StdOut.print(System.currentTimeMillis() - startTime);
+        StdOut.print(collinear.numberOfSegments());
     }
 }
