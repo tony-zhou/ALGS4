@@ -11,6 +11,8 @@ import java.util.List;
 public class BruteCollinearPoints {
 
     private final Point[] points;
+    private List<LineSegment> temp;
+    private int number;
 
     public BruteCollinearPoints(Point[] points) {
         if (points == null)
@@ -28,14 +30,7 @@ public class BruteCollinearPoints {
             if (this.points[i].compareTo(this.points[i - 1]) == 0)
                 throw new IllegalArgumentException();
         }
-    }
-
-    public int numberOfSegments() {
-        return segments().length;
-    }
-
-    public LineSegment[] segments() {
-        List<LineSegment> temp = new ArrayList<>();
+        temp = new ArrayList<>();
         for (int firstPoint = 0; firstPoint < points.length - 3; firstPoint++) {
             for (int secondPoint = firstPoint + 1; secondPoint < points.length - 2; secondPoint++) {
                 double slopeToIJ = points[firstPoint].slopeTo(points[secondPoint]);
@@ -49,7 +44,15 @@ public class BruteCollinearPoints {
                 }
             }
         }
-        LineSegment[] lineSegments = new LineSegment[temp.size()];
+        number = temp.size();
+    }
+
+    public int numberOfSegments() {
+        return number;
+    }
+
+    public LineSegment[] segments() {
+        LineSegment[] lineSegments = new LineSegment[number];
         for (int i = 0; i < lineSegments.length; i++) {
             lineSegments[i] = temp.get(i);
         }
