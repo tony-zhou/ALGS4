@@ -10,9 +10,8 @@ import java.util.List;
 
 public class BruteCollinearPoints {
 
-    private final Point[] points;
-    private List<LineSegment> temp;
-    private int number;
+    private final List<LineSegment> temp;
+    private final int number;
 
     public BruteCollinearPoints(Point[] points) {
         if (points == null)
@@ -23,23 +22,23 @@ public class BruteCollinearPoints {
                     throw new IllegalArgumentException();
             }
         }
-        this.points = new Point[points.length];
-        System.arraycopy(points, 0, this.points, 0, points.length);
-        Insertion.sort(this.points);
-        for (int i = 1; i < this.points.length; i++) {
-            if (this.points[i].compareTo(this.points[i - 1]) == 0)
+        Point[] pointsCopy = new Point[points.length];
+        System.arraycopy(points, 0, pointsCopy, 0, points.length);
+        Insertion.sort(pointsCopy);
+        for (int i = 1; i < pointsCopy.length; i++) {
+            if (pointsCopy[i].compareTo(pointsCopy[i - 1]) == 0)
                 throw new IllegalArgumentException();
         }
         temp = new ArrayList<>();
         for (int firstPoint = 0; firstPoint < points.length - 3; firstPoint++) {
             for (int secondPoint = firstPoint + 1; secondPoint < points.length - 2; secondPoint++) {
-                double slopeToIJ = points[firstPoint].slopeTo(points[secondPoint]);
+                double slopeToIJ = pointsCopy[firstPoint].slopeTo(pointsCopy[secondPoint]);
                 for (int thirdPoint = secondPoint + 1; thirdPoint < points.length - 1; thirdPoint++) {
-                    if (Double.compare(slopeToIJ, points[firstPoint].slopeTo(points[thirdPoint])) != 0)
+                    if (Double.compare(slopeToIJ, pointsCopy[firstPoint].slopeTo(pointsCopy[thirdPoint])) != 0)
                         continue;
                     for (int forthPoint = thirdPoint + 1; forthPoint < points.length; forthPoint++) {
-                        if (Double.compare(slopeToIJ, points[firstPoint].slopeTo(points[forthPoint])) == 0)
-                            temp.add(new LineSegment(points[firstPoint], points[forthPoint]));
+                        if (Double.compare(slopeToIJ, pointsCopy[firstPoint].slopeTo(pointsCopy[forthPoint])) == 0)
+                            temp.add(new LineSegment(pointsCopy[firstPoint], pointsCopy[forthPoint]));
                     }
                 }
             }
