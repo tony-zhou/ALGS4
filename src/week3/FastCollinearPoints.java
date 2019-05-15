@@ -1,12 +1,8 @@
 package week3;
 
-import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.Insertion;
-import edu.princeton.cs.algs4.StdDraw;
-import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class FastCollinearPoints {
 
@@ -23,33 +19,30 @@ public class FastCollinearPoints {
                     throw new IllegalArgumentException();
             }
         }
-        Point[] pointsCopy = new Point[points.length];
-        Point[] pointsBase = new Point[points.length];
-        System.arraycopy(points, 0, pointsCopy, 0, points.length);
-        System.arraycopy(points, 0, pointsBase, 0, points.length);
-        Insertion.sort(pointsCopy);
-        for (int i = 1; i < pointsCopy.length; i++) {
-            if (pointsCopy[i].compareTo(pointsCopy[i - 1]) == 0)
+        List<Point> pointList = new ArrayList<>(Arrays.asList(points));
+        Collections.sort(pointList);
+        for (int i = 1; i < pointList.size(); i++) {
+            if (pointList.get(i).compareTo(pointList.get(i - 1)) == 0)
                 throw new IllegalArgumentException();
         }
         temp = new ArrayList<>();
-        for (int i = 0; i < pointsBase.length; i++) {
-            Insertion.sort(pointsCopy, pointsBase[i].slopeOrder());
+        for (int i = 0; i < points.length; i++) {
+            pointList.sort(points[i].slopeOrder());
             int j = 1;
             int k = 2;
             List<Point> tmp = new ArrayList<>();
-            tmp.add(pointsCopy[0]);
-            while (k < pointsCopy.length) {
-                if (Double.compare(pointsCopy[0].slopeTo(pointsCopy[j]), pointsCopy[0].slopeTo(pointsCopy[k])) == 0) {
-                    tmp.add(pointsCopy[j]);
-                    tmp.add(pointsCopy[k]);
+            tmp.add(pointList.get(0));
+            while (k < pointList.size()) {
+                if (Double.compare(pointList.get(0).slopeTo(pointList.get(j)), pointList.get(0).slopeTo(pointList.get(k))) == 0) {
+                    tmp.add(pointList.get(j));
+                    tmp.add(pointList.get(k));
                     k++;
                 } else {
                     j = k;
                     k = j + 1;
                     if (tmp.size() >= 4) {
-                        Point start = pointsCopy[0];
-                        Point end = pointsCopy[0];
+                        Point start = pointList.get(0);
+                        Point end = pointList.get(0);
                         for (Point p : tmp) {
                             if (p.compareTo(start) < 0)
                                 start = p;
@@ -69,12 +62,12 @@ public class FastCollinearPoints {
                         }
                     }
                     tmp.clear();
-                    tmp.add(pointsCopy[0]);
+                    tmp.add(pointList.get(0));
                 }
             }
             if (tmp.size() >= 4) {
-                Point start = pointsCopy[0];
-                Point end = pointsCopy[0];
+                Point start = pointList.get(0);
+                Point end = pointList.get(0);
                 for (Point p : tmp) {
                     if (p.compareTo(start) < 0)
                         start = p;
