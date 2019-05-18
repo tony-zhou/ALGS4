@@ -31,46 +31,29 @@ public class FastCollinearPoints {
                 throw new IllegalArgumentException();
         }
         temp = new ArrayList<>();
+        List<Point> tmp = new ArrayList<>();
         for (int i = 0; i < points.length; i++) {
             pointList.sort(points[i].slopeOrder());
             int j = 1;
             int k = 2;
-            List<Point> tmp = new ArrayList<>();
             tmp.add(pointList.get(0));
             while (k < pointList.size()) {
                 if (Double.compare(pointList.get(0).slopeTo(pointList.get(j)), pointList.get(0).slopeTo(pointList.get(k))) == 0) {
-                    tmp.add(pointList.get(j));
-                    tmp.add(pointList.get(k));
                     k++;
                 } else {
-                    j = k;
-                    k = j + 1;
-                    if (tmp.size() >= 4) {
-                        Point start = pointList.get(0);
-                        Point end = pointList.get(0);
-                        for (Point p : tmp) {
-                            if (p.compareTo(start) < 0)
-                                start = p;
-                            else if (p.compareTo(end) > 0)
-                                end = p;
-                        }
-                        LineSegment line = new LineSegment(start, end);
-                        boolean duplicateLineSegment = false;
-                        for (LineSegment lineSegment : temp) {
-                            if (lineSegment.toString().compareTo(line.toString()) == 0) {
-                                duplicateLineSegment = true;
-                                break;
-                            }
-                        }
-                        if (!duplicateLineSegment) {
-                            temp.add(line);
-                        }
+                    if (k - j > 2) {
+                        break;
+                    } else {
+                        k++;
+                        j++;
                     }
-                    tmp.clear();
-                    tmp.add(pointList.get(0));
                 }
             }
-            if (tmp.size() >= 4) {
+            if (k - j > 2) {
+                for (int index = j; index < k; index++)
+                    tmp.add(pointList.get(index));
+
+
                 Point start = pointList.get(0);
                 Point end = pointList.get(0);
                 for (Point p : tmp) {
@@ -79,6 +62,7 @@ public class FastCollinearPoints {
                     else if (p.compareTo(end) > 0)
                         end = p;
                 }
+
                 LineSegment line = new LineSegment(start, end);
                 boolean duplicateLineSegment = false;
                 for (LineSegment lineSegment : temp) {
@@ -89,7 +73,10 @@ public class FastCollinearPoints {
                 }
                 if (!duplicateLineSegment)
                     temp.add(line);
+
             }
+            tmp.clear();
+
         }
         number = temp.size();
     }
