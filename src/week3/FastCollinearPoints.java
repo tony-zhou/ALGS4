@@ -42,7 +42,31 @@ public class FastCollinearPoints {
                     k++;
                 } else {
                     if (k - j > 2) {
-                        break;
+                        for (int index = j; index < k; index++)
+                            tmp.add(pointList.get(index));
+
+                        Point start = pointList.get(0);
+                        Point end = pointList.get(0);
+                        for (Point p : tmp) {
+                            if (p.compareTo(start) < 0)
+                                start = p;
+                            else if (p.compareTo(end) > 0)
+                                end = p;
+                        }
+                        tmp.clear();
+                        LineSegment line = new LineSegment(start, end);
+                        boolean duplicateLineSegment = false;
+                        for (LineSegment lineSegment : temp) {
+                            if (lineSegment.toString().compareTo(line.toString()) == 0) {
+                                duplicateLineSegment = true;
+                                break;
+                            }
+                        }
+                        if (!duplicateLineSegment)
+                            temp.add(line);
+                        tmp.add(pointList.get(0));
+                        j = k;
+                        k = j + 1;
                     } else {
                         k++;
                         j++;
