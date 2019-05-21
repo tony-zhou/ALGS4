@@ -3,6 +3,7 @@ package week3;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,13 +33,15 @@ public class FastCollinearPoints {
         }
         temp = new ArrayList<>();
         List<Point> tmp = new ArrayList<>();
+        Point start, end;
         for (int i = 0; i < points.length; i++) {
             pointList.sort(points[i].slopeOrder());
             int j = 1;
             int k = 2;
-            tmp.add(pointList.get(0));
+            start = end = pointList.get(0);
+            tmp.add(start);
             while (k < pointList.size()) {
-                if (Double.compare(pointList.get(0).slopeTo(pointList.get(j)), pointList.get(0).slopeTo(pointList.get(k))) == 0) {
+                if (Double.compare(start.slopeTo(pointList.get(j)), start.slopeTo(pointList.get(k))) == 0) {
                     k++;
                 } else {
                     if (k - j > 2) {
@@ -53,9 +56,6 @@ public class FastCollinearPoints {
                 for (int index = j; index < k; index++)
                     tmp.add(pointList.get(index));
 
-
-                Point start = pointList.get(0);
-                Point end = pointList.get(0);
                 for (Point p : tmp) {
                     if (p.compareTo(start) < 0)
                         start = p;
