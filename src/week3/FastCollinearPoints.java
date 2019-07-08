@@ -1,13 +1,12 @@
 package week3;
 
 import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.Quick3way;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class FastCollinearPoints {
@@ -25,17 +24,19 @@ public class FastCollinearPoints {
                     throw new IllegalArgumentException();
             }
         }
+        Point[] pointsBase = new Point[points.length];
+        System.arraycopy(points, 0, pointsBase, 0, points.length);
         List<Point> pointList = new ArrayList<>(Arrays.asList(points));
-        Collections.sort(pointList);
-        for (int i = 1; i < pointList.size(); i++) {
-            if (pointList.get(i).compareTo(pointList.get(i - 1)) == 0)
+        Quick3way.sort(pointsBase);
+        for (int i = 1; i < pointsBase.length; i++) {
+            if (pointsBase[i].compareTo(pointsBase[i - 1]) == 0)
                 throw new IllegalArgumentException();
         }
         temp = new ArrayList<>();
         List<Point> tmp = new ArrayList<>();
         Point start, end;
-        for (int i = 0; i < points.length; i++) {
-            pointList.sort(points[i].slopeOrder());
+        for (int i = 0; i < pointsBase.length; i++) {
+            pointList.sort(pointsBase[i].slopeOrder());
             int j = 1;
             int k = 2;
             start = end = pointList.get(0);
